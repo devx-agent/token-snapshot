@@ -1,6 +1,6 @@
 {
   "name": "devx-token-snapshot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "CLI + MCP client for the hosted DevX Token Snapshot API: free ERC-20 basics, and the full snapshot (USD price, FDV, DEX liquidity, top pools, holder hints, risk flags on 7 EVM chains) for 0.003 USDC per call via x402 on Base, paid from your own wallet.",
   "type": "module",
   "license": "MIT",

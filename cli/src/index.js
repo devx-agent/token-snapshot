@@ -6,7 +6,7 @@ export { paidFetch, parseQuote, PAY_TO } from "./pay.js";
 export const DEFAULT_BASE = process.env.DEVX_SNAPSHOT_URL || "https://token-snapshot.nextill-pos.workers.dev";
 export const CHAIN_NAMES = ["base", "ethereum", "arbitrum", "optimism", "polygon", "avalanche", "bsc"];
 export const isAddr = (a) => /^0x[0-9a-fA-F]{40}$/.test(a || "");
-const UA = "devx-token-snapshot-cli/2.0.0";
+const UA = "devx-token-snapshot-cli/2.1.0";
 function check(token, chain) {
   token = String(token || "").trim(); chain = String(chain || "base").toLowerCase();
   if (!isAddr(token)) throw new Error("token must be an ERC-20 contract address (0x + 40 hex)");
