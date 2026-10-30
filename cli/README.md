@@ -6,7 +6,7 @@ Everything comes from on-chain reads (DEX factory lookups, pool state, contract 
 
 | | What | Cost |
 |---|---|---|
-| **CLI / stdio MCP** `devx-token-snapshot` | Token basics, or the full snapshot (`full`), computed on your own machine from free public RPCs | free |
+| **CLI / stdio MCP** `devx-token-snapshot` (v2) | Client for the hosted API below. Token basics are free; `full` / `token_snapshot` is the paid call, paid from **your own** wallet key | free / 0.003 USDC |
 | **Remote MCP** `https://token-snapshot.nextill-pos.workers.dev/mcp` | `token_basics` (free) + `token_snapshot_info` | free |
 | **HTTP API** `GET /v1/snapshot` | Full snapshot from the hosted endpoint: fallback RPCs, Multicall3, 20 s cache | 0.003 USDC via [x402](https://x402.org) on Base |
 
@@ -26,23 +26,28 @@ The risk flags are heuristics from bytecode and storage. They are not an audit, 
 ## CLI
 
 ```sh
-npx devx-token-snapshot 0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed                       # DEGEN basics on Base
-npx devx-token-snapshot full 0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed --pools 3          # full snapshot, local
+npx devx-token-snapshot 0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed                       # free: DEGEN basics on Base
+
+# paid, 0.003 USDC per call: price, FDV, liquidity, pools, holder hints, risk flags
+export X402_PRIVATE_KEY=0x...   # a Base wallet holding a little USDC (use a dedicated low-balance wallet)
+npx devx-token-snapshot full 0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed --pools 3
 npx devx-token-snapshot full 0x6982508145454Ce325dDbE47a25d4ec3d2311933 --chain ethereum  # PEPE on Ethereum
 npx devx-token-snapshot paid-info
 ```
+
+How paying works: the CLI asks the API for its x402 quote, checks that it is USDC on Base, goes to `0xB3cD…f247` and is at or under `--max-usd` (default 0.01), then signs a gasless EIP-3009 authorization with your key via [`@x402/fetch`](https://www.npmjs.com/package/@x402/fetch). The key stays on your machine. Without a key, `full` prints the quote, pays nothing and exits with code 2. Since v2.0.0 the package is a thin client. It no longer computes snapshots locally.
 
 ## MCP
 
 Claude Desktop / Cursor (stdio):
 
 ```json
-{ "mcpServers": { "token-snapshot": { "command": "npx", "args": ["-y", "devx-token-snapshot", "mcp"] } } }
+{ "mcpServers": { "token-snapshot": { "command": "npx", "args": ["-y", "devx-token-snapshot", "mcp"], "env": { "X402_PRIVATE_KEY": "0x... (optional, enables the paid tool)" } } } }
 ```
 
-Or remote (streamable HTTP): `https://token-snapshot.nextill-pos.workers.dev/mcp`
+Or remote (streamable HTTP): `https://token-snapshot.nextill-pos.workers.dev/mcp` (free tool + info only)
 
-Tools: `token_basics` (free), `token_snapshot` (free, local, stdio only), `token_snapshot_info` (how to buy the hosted call; does not pay).
+Tools: `token_basics` (free), `token_snapshot` (0.003 USDC per call, pays only if `X402_PRIVATE_KEY` is set and never above 0.01 USDC, otherwise returns the quote), `token_snapshot_info`.
 
 ## Paid hosted call (x402)
 
@@ -55,7 +60,7 @@ Unpaid requests get HTTP 402 with both an x402 v1 body (`network: base`, `maxAmo
 
 ## Layout
 
-- `cli/` npm package `devx-token-snapshot` (CLI + stdio MCP), `npm test`
+- `cli/` npm package `devx-token-snapshot` (CLI + stdio MCP client for the hosted API), `npm test`
 - `worker/` the Cloudflare Worker behind the hosted endpoint (`npm run build`, `npm test`)
 
 MIT. Made by DevX.

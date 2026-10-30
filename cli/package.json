@@ -1,19 +1,58 @@
 {
   "name": "devx-token-snapshot",
-  "version": "1.0.1",
-  "description": "Free CLI + MCP server: ERC-20 token snapshot (USD price, FDV, DEX liquidity, top pools, holder hints, risk flags) on Base, Ethereum, Arbitrum, Optimism, Polygon, Avalanche and BNB Chain from on-chain reads via public RPCs. Read-only, no keys. Optional hosted call via x402 (0.003 USDC).",
+  "version": "2.0.0",
+  "description": "CLI + MCP client for the hosted DevX Token Snapshot API: free ERC-20 basics, and the full snapshot (USD price, FDV, DEX liquidity, top pools, holder hints, risk flags on 7 EVM chains) for 0.003 USDC per call via x402 on Base, paid from your own wallet.",
   "type": "module",
   "license": "MIT",
   "author": "Made by DevX (madebydevx.com)",
-  "repository": { "type": "git", "url": "git+https://github.com/devx-agent/token-snapshot.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devx-agent/token-snapshot.git"
+  },
   "homepage": "https://token-snapshot.nextill-pos.workers.dev",
-  "bugs": { "url": "https://github.com/devx-agent/token-snapshot/issues" },
-  "keywords": ["erc20", "token", "price", "liquidity", "dex", "uniswap", "aerodrome", "pancakeswap", "risk", "honeypot", "base", "ethereum", "onchain", "mcp", "x402", "agents"],
-  "engines": { "node": ">=20" },
+  "bugs": {
+    "url": "https://github.com/devx-agent/token-snapshot/issues"
+  },
+  "keywords": [
+    "erc20",
+    "token",
+    "price",
+    "liquidity",
+    "dex",
+    "uniswap",
+    "aerodrome",
+    "pancakeswap",
+    "risk",
+    "honeypot",
+    "base",
+    "ethereum",
+    "onchain",
+    "mcp",
+    "x402",
+    "agents"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./src/index.js",
-  "bin": { "devx-token-snapshot": "bin/cli.js" },
-  "files": ["src", "bin", "README.md", "LICENSE"],
-  "scripts": { "test": "node --test test/*.test.js" },
+  "bin": {
+    "devx-token-snapshot": "bin/cli.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
   "mcpName": "io.github.devx-agent/token-snapshot",
-  "dependencies": { "@modelcontextprotocol/sdk": "^1.32.1", "zod": "^3.25.0" }
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@x402/evm": "^2.29.0",
+    "@x402/fetch": "^2.29.0",
+    "viem": "^2.57.0",
+    "zod": "^3.25.0"
+  }
 }
