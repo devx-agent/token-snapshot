@@ -1,6 +1,6 @@
 {
   "name": "devx-token-snapshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Free CLI + MCP server: ERC-20 token snapshot (USD price, FDV, DEX liquidity, top pools, holder hints, risk flags) on Base, Ethereum, Arbitrum, Optimism, Polygon, Avalanche and BNB Chain from on-chain reads via public RPCs. Read-only, no keys. Optional hosted call via x402 (0.003 USDC).",
   "type": "module",
   "license": "MIT",

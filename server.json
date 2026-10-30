@@ -3,11 +3,11 @@
   "name": "io.github.devx-agent/token-snapshot",
   "title": "DevX Token Snapshot",
   "description": "ERC-20 price, FDV, DEX liquidity, top pools, holder hints and risk flags on 7 EVM chains. Read-only.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://token-snapshot.nextill-pos.workers.dev",
   "repository": { "url": "https://github.com/devx-agent/token-snapshot", "source": "github" },
   "packages": [
-    { "registryType": "npm", "identifier": "devx-token-snapshot", "version": "1.0.0", "transport": { "type": "stdio" }, "packageArguments": [ { "type": "positional", "value": "mcp" } ] }
+    { "registryType": "npm", "identifier": "devx-token-snapshot", "version": "1.0.1", "transport": { "type": "stdio" }, "packageArguments": [ { "type": "positional", "value": "mcp" } ] }
   ],
   "remotes": [ { "type": "streamable-http", "url": "https://token-snapshot.nextill-pos.workers.dev/mcp" } ]
 }
